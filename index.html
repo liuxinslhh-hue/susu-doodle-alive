@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5f2e9">
+  <meta name="description" content="画得歪一点也没关系。让你的涂鸦醒来，戳一戳、拎起来，带走一只独一无二的小家伙。">
+  <title>乱画成精 · 你的涂鸦，活了</title>
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+  <header><a class="brand" href="./"><span class="brand-icon">✳</span> 乱画成精 <small>DOODLE ALIVE</small></a><span class="byline">Susu 的 AI 实验室 <span class="beta">饭搭子试玩版</span></span></header>
+  <main>
+    <section class="intro"><div class="eyebrow"><span></span> 一点乱画，一点魔法</div><h1>画得不太像？<br><span>它倒挺像活的。</span><svg viewBox="0 0 355 16" aria-hidden="true"><path d="M5 10 Q160 -1 349 8 M17 14 Q190 4 333 12"/></svg></h1><p>你画的小家伙饿了。<br>给它画点吃的，看看会发生什么。</p></section>
+    <section class="workspace" aria-label="涂鸦工作台">
+      <div class="paper">
+        <div class="paper-top"><span id="modeLabel">01 / 随便画画</span><span id="paperHint">不用画得好，歪一点也很可爱</span></div>
+        <div class="stage-wrap"><canvas id="stage" aria-label="画布：绘画时拖动画线，醒来后点击戳它、拖动拎起、松手弹回"></canvas><div class="speech" id="speech" role="status" aria-live="polite"></div><span class="corner-note" id="cornerNote">↓ 这是示例，你也可以自己画</span></div>
+        <div class="paper-bottom"><span class="status-dot"></span><span id="status">小家伙还在装睡</span><span class="private-note">画作只留在你的浏览器</span></div>
+        <div class="quick-tools"><button id="quickClear">自己画</button><button id="quickPreset">换一只</button><button id="quickWake">✦ 叫醒它</button></div>
+      </div>
+      <aside class="controls">
+        <div class="control-head"><span class="tiny">THE LITTLE WORKSHOP</span><h2 id="panelTitle">先给它一点模样</h2><p id="panelSub">一团线，也有自己的性格。</p></div>
+        <div id="drawControls">
+          <div class="label-row"><label>选个颜色</label><span id="colorName">墨水黑</span></div>
+          <div class="swatches" id="swatches"><button data-color="#293d38" data-name="墨水黑" class="selected" aria-label="墨水黑" style="--swatch:#293d38"></button><button data-color="#e67559" data-name="柿子橙" aria-label="柿子橙" style="--swatch:#e67559"></button><button data-color="#6d9180" data-name="苔藓绿" aria-label="苔藓绿" style="--swatch:#6d9180"></button><button data-color="#839abe" data-name="雨天蓝" aria-label="雨天蓝" style="--swatch:#839abe"></button><button data-color="#a084b0" data-name="芋泥紫" aria-label="芋泥紫" style="--swatch:#a084b0"></button></div>
+          <div class="label-row brush-label"><label for="brush">笔尖粗细</label><span id="brushValue">8</span></div><input id="brush" type="range" min="3" max="22" value="8">
+          <div class="tool-row"><button id="pen" class="tool active" aria-pressed="true">✎ 画笔</button><button id="eraser" class="tool" aria-pressed="false">▱ 橡皮</button><button id="undo" class="tool" aria-label="撤销上一笔">↶ 撤销</button></div>
+          <button id="clear" class="text-button">清空，自己画一只 ↗</button>
+          <div class="divider"></div><label class="preset-label">没灵感？借一只来玩</label><div class="presets"><button data-preset="blob">软趴趴</button><button data-preset="bunny">长耳朵</button><button data-preset="star">歪星星</button></div>
+          <label class="check"><input type="checkbox" id="eyes" checked> 帮它点一双小眼睛</label>
+        </div>
+        <div id="playControls" hidden>
+          <section id="feedPanel" class="feed-panel" aria-label="小家伙的厨房">
+            <div class="label-row"><b>今天想喂点什么？</b><span id="tasteCount">口味 0 / 3</span></div>
+            <div class="food-choices" role="group" aria-label="选择食物类型"><button data-food="rice" aria-pressed="true" class="chosen">饭团<small>软乎乎</small></button><button data-food="chili" aria-pressed="false">辣椒<small>会喷火</small></button><button data-food="lemon" aria-pressed="false">柠檬<small>酸到变形</small></button></div>
+            <p class="food-instruction" id="foodInstruction">画一个饭团。歪歪扭扭也能吃。</p>
+            <div class="food-pad"><canvas id="foodCanvas" width="320" height="160" aria-label="食物画布：按住拖动画食物"></canvas><span id="foodGuide">在这里画给它吃的东西 ✎</span></div>
+            <div class="food-tools"><button id="foodUndo">↶ 撤一笔</button><button id="foodClear">重画食物</button></div>
+            <button id="feed" class="primary" disabled>喂给它 <span>↗</span></button>
+            <button id="feedExample" class="text-button">不会画？用示例喂一口</button>
+            <p class="food-disclosure">先选类型，再画模样。这里不识别涂鸦。</p>
+            <div class="taste-book"><div class="label-row"><b>它的饭搭子手账</b><span id="mealCount">还没开饭</span></div><div id="tasteStamps" class="taste-stamps"><span data-taste="rice">？</span><span data-taste="chili">？</span><span data-taste="lemon">？</span></div><p id="mealStory" aria-live="polite">第一次见面，它正饿着肚子看你。</p></div>
+          </section>
+          <details class="pet-details"><summary>起名字 / 戳戳 / 拎起来玩</summary><label for="petName">给小家伙起个名字</label><input id="petName" class="name-input" maxlength="10" placeholder="比如：不想上班" value="软趴趴"><div class="play-actions"><button id="jump" class="tool">↑ 跳一下</button><button id="calm" class="tool">回到中间</button></div><p>直接点身体会变形，按住拖动可以把它拎起来。</p></details>
+        </div>
+        <button id="wake" class="primary">✦ 叫醒这只小家伙 <span>→</span></button>
+        <div id="exportControls" hidden><button id="gif" class="primary">带走它的小表情 <span>↓</span></button><button id="redraw" class="secondary">↶ 再给它画两笔</button></div>
+        <p class="small-note" id="saveNote">画作本地处理 · 放心乱画</p>
+      </aside>
+    </section>
+    <footer><span>认真画也行，乱画更行。</span><span>MADE WITH A LITTLE CHAOS & A LOT OF HEART <i>✳</i></span></footer>
+  </main>
+  <script src="gif.js?v=5"></script><script src="feeding.js?v=5"></script><script src="app.js?v=5"></script>
+</body></html>
